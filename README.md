@@ -57,9 +57,9 @@ MULTI-AGENT COLLABORATION
 
 ## Use Cases
 
-- **Marketing teams** - Some agents handle marketing content, others handle development docs
+- **Multi-agent setups** - Different agents handle different domains while sharing common knowledge
 - **Client projects** - Isolate project-specific knowledge while sharing team knowledge
-- **Cross-team collaboration** - Share entities and concepts across teams, keep project work private
+- **Cross-team collaboration** - Share entities and concepts across teams, keep project or internal team work private
 
 ## Quick Start
 
