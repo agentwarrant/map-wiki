@@ -267,6 +267,28 @@ wiki.canWrite('path');
 wiki.getAuditLog();
 ```
 
+## Roadmap
+
+### Future: Agent Identity & Cryptographic Verification (Phase 4)
+
+The current implementation uses agent IDs defined in configuration files. For single-user setups where all agents are controlled by the same person, this is sufficient.
+
+**Future work for multi-user scenarios:**
+
+- **Cryptographic Agent Identity** - Each agent has a verifiable cryptographic identity
+- **Signed Operations** - Wiki operations signed by agent's private key
+- **Verification Layer** - Middleware verifies agent signatures before operations
+- **Cross-Organization Trust** - Trust agents from different organizations
+- **External Agent Verification** - Verify identity of external agents (Claude Code, Cursor, etc.)
+
+This would enable:
+- Multi-user wiki sharing with verified agent identities
+- Cross-organization collaboration
+- Compliance and audit trails with cryptographic proof
+- Trusted external agent contributions
+
+**Status:** Deferred until needed for multi-user/cross-org scenarios.
+
 ## Contributing
 
 Contributions welcome! See `CONTRIBUTING.md` for guidelines.
