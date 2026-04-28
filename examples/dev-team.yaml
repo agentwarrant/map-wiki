@@ -1,0 +1,98 @@
+# Example Configuration: Development Team
+
+This example shows how to configure MAP Wiki for a development team with
+multiple agents working on different codebases.
+
+## Scenario
+
+- Lead agent: Full access to everything
+- Frontend agent: Manages frontend documentation
+- Backend agent: Manages backend documentation
+- DevOps agent: Manages infrastructure documentation
+
+## Configuration
+
+```yaml
+version: 1
+
+agents:
+  lead-agent:
+    id: "agent:lead-agent"
+    role: admin
+    description: "Lead developer with full access"
+    paths:
+      read: ["*"]
+      write: ["*"]
+
+  frontend-agent:
+    id: "agent:frontend-agent"
+    role: contributor
+    description: "Frontend documentation agent"
+    paths:
+      read:
+        - "shared/**"
+        - "frontend/**"
+        - "entities/**"
+        - "concepts/**"
+        - "sources/**"
+      write:
+        - "shared/**"
+        - "frontend/**"
+        - "entities/**"
+
+  backend-agent:
+    id: "agent:backend-agent"
+    role: contributor
+    description: "Backend documentation agent"
+    paths:
+      read:
+        - "shared/**"
+        - "backend/**"
+        - "entities/**"
+        - "concepts/**"
+        - "sources/**"
+      write:
+        - "shared/**"
+        - "backend/**"
+        - "entities/**"
+
+  devops-agent:
+    id: "agent:devops-agent"
+    role: contributor
+    description: "DevOps documentation agent"
+    paths:
+      read:
+        - "shared/**"
+        - "infrastructure/**"
+        - "entities/**"
+        - "concepts/**"
+      write:
+        - "shared/**"
+        - "infrastructure/**"
+```
+
+## Directory Structure
+
+```
+wiki/
+├── projects/
+│   ├── shared/           # All agents can read/write
+│   ├── frontend/        # Frontend docs (lead + frontend agents)
+│   ├── backend/         # Backend docs (lead + backend agents)
+│   └── infrastructure/  # DevOps docs (lead + devops agents)
+├── entities/            # All agents can read/write
+├── concepts/            # All agents can read/write
+└── syntheses/           # All agents can read
+```
+
+## Permission Matrix
+
+| Directory | Lead | Frontend | Backend | DevOps |
+|-----------|------|----------|---------|--------|
+| `shared/` | R/W | R/W | R/W | R/W |
+| `frontend/` | R/W | R/W | R | R |
+| `backend/` | R/W | R | R/W | R |
+| `infrastructure/` | R/W | R | R | R/W |
+| `entities/` | R/W | R/W | R/W | R/W |
+| `concepts/` | R/W | R/W | R/W | R/W |
+| `syntheses/` | R/W | R | R | R |

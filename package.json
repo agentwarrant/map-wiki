@@ -1,0 +1,28 @@
+{
+  "name": "map-wiki",
+  "version": "1.0.0",
+  "description": "Multi-Agent Permissions Wiki - Permission-based access control for multi-agent wiki collaboration",
+  "main": "wiki-tools.js",
+  "scripts": {
+    "test": "node test-permissions.js && node test-wiki-tools.js",
+    "test:permissions": "node test-permissions.js",
+    "test:tools": "node test-wiki-tools.js"
+  },
+  "keywords": [
+    "openclaw",
+    "wiki",
+    "permissions",
+    "multi-agent",
+    "access-control",
+    "ai-agents"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/YOUR_ORG/map-wiki.git"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

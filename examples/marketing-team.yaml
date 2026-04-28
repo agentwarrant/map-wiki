@@ -1,0 +1,117 @@
+# Example Configuration: Marketing Team
+
+This example shows how to configure MAP Wiki for a marketing team with
+multiple agents working on different projects.
+
+## Scenario
+
+- Main agent: Full access to everything
+- Marketing agent: Manages marketing content
+- Social agent: Manages social media content
+- Analytics agent: Read-only access for reporting
+
+## Configuration
+
+```yaml
+version: 1
+
+agents:
+  main-agent:
+    id: "agent:main-agent"
+    role: admin
+    description: "Main assistant with full access"
+    paths:
+      read: ["*"]
+      write: ["*"]
+
+  marketing-agent:
+    id: "agent:marketing-agent"
+    role: contributor
+    description: "Marketing content agent"
+    paths:
+      read:
+        - "shared/**"
+        - "marketing/**"
+        - "social/**"
+        - "entities/**"
+        - "concepts/**"
+        - "sources/**"
+        - "syntheses/**"
+      write:
+        - "shared/**"
+        - "marketing/**"
+        - "entities/**"
+        - "concepts/**"
+
+  social-agent:
+    id: "agent:social-agent"
+    role: contributor
+    description: "Social media agent"
+    paths:
+      read:
+        - "shared/**"
+        - "social/**"
+        - "entities/**"
+        - "concepts/**"
+      write:
+        - "shared/**"
+        - "social/**"
+
+  analytics-agent:
+    id: "agent:analytics-agent"
+    role: read
+    description: "Analytics agent with read-only access"
+    paths:
+      read:
+        - "shared/**"
+        - "marketing/**"
+        - "social/**"
+        - "syntheses/**"
+      write: []
+```
+
+## Directory Structure
+
+```
+wiki/
+├── projects/
+│   ├── shared/           # All agents can read/write
+│   ├── marketing/        # Marketing content (main + marketing agents)
+│   └── social/          # Social media content (main + marketing + social agents)
+├── entities/            # All agents can read/write
+├── concepts/            # All agents can read/write
+├── syntheses/           # All agents can read
+└── reports/             # Auto-generated, read-only
+```
+
+## Permision Matrix
+
+| Directory | Main | Marketing | Social | Analytics |
+|-----------|------|-----------|--------|-----------|
+| `shared/` | R/W | R/W | R/W | R |
+| `marketing/` | R/W | R/W | R | R |
+| `social/` | R/W | R | R/W | R |
+| `entities/` | R/W | R/W | R/W | R |
+| `concepts/` | R/W | R/W | R/W | R |
+| `syntheses/` | R/W | R/W | R | R |
+| `reports/` | R | R | R | R |
+
+## Usage Example
+
+```javascript
+const { UnifiedWikiTools } = require('./.openclaw-wiki/wiki-tools.js');
+
+const wiki = new UnifiedWikiTools(wikiPath, 'marketing-agent');
+
+// Marketing agent can read/write marketing content
+const result = wiki.writeFile('projects/marketing/campaign.md', 'content');
+console.log(result); // { success: true, permission: 'granted' }
+
+// Marketing agent can read social content
+const socialResult = wiki.readFile('projects/social/post.md');
+console.log(socialResult.success); // true
+
+// Marketing agent cannot write to social content
+const blockedResult = wiki.writeFile('projects/social/post.md', 'content');
+console.log(blockedResult.error); // 'permission_denied'
+```

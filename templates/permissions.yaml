@@ -1,0 +1,136 @@
+# MAP Wiki Permissions Configuration Template
+# Copy this file to your wiki root as .permissions.yaml and customize
+# 
+# Permission levels:
+#   admin - Full access to all sections
+#   contributor - Can read shared sections, write to assigned projects
+#   read - Can read shared sections only
+#   blocked - No access to section
+
+version: 1
+
+# Agent definitions
+# Add your agents here based on your setup
+agents:
+  # Main agent (admin access)
+  main-agent:
+    id: "agent:main-agent"
+    role: admin
+    description: "Main assistant agent with full access"
+    paths:
+      read: ["*"]
+      write: ["*"]
+
+  # Example: Marketing team agent
+  marketing-agent:
+    id: "agent:marketing-agent"
+    role: contributor
+    description: "Marketing team agent"
+    paths:
+      read:
+        - "shared/**"
+        - "marketing/**"
+        - "entities/**"
+        - "concepts/**"
+        - "sources/**"
+        - "syntheses/**"
+      write:
+        - "shared/**"
+        - "marketing/**"
+        - "entities/**"
+        - "concepts/**"
+    contexts: ["marketing"]
+
+  # Example: Research team agent
+  research-agent:
+    id: "agent:research-agent"
+    role: contributor
+    description: "Research team agent"
+    paths:
+      read:
+        - "shared/**"
+        - "research/**"
+        - "entities/**"
+        - "concepts/**"
+        - "sources/**"
+        - "syntheses/**"
+      write:
+        - "shared/**"
+        - "research/**"
+        - "entities/**"
+        - "concepts/**"
+    contexts: ["research"]
+
+  # Example: Development team agent
+  dev-agent:
+    id: "agent:dev-agent"
+    role: contributor
+    description: "Development team agent"
+    paths:
+      read:
+        - "shared/**"
+        - "development/**"
+        - "entities/**"
+        - "concepts/**"
+        - "sources/**"
+        - "syntheses/**"
+      write:
+        - "shared/**"
+        - "development/**"
+        - "entities/**"
+        - "concepts/**"
+    contexts: ["development"]
+
+# External agents (read-only access)
+# These agents can only read shared sections
+external_agents:
+  external-agent:
+    role: read
+    description: "External agent with read-only access"
+    paths:
+      read: ["shared/**"]
+      write: []
+
+# Section definitions
+# Define what each section is for
+sections:
+  shared:
+    description: "Common knowledge shared by all agents"
+    default_permission: read
+
+  entities:
+    description: "People, companies, projects, systems"
+    default_permission: read
+
+  concepts:
+    description: "Ideas, patterns, policies, abstractions"
+    default_permission: read
+
+  sources:
+    description: "Raw imported content and bridge pages"
+    default_permission: read
+
+  syntheses:
+    description: "Compiled summaries and maintained rollups"
+    default_permission: read
+
+  reports:
+    description: "Auto-generated dashboards"
+    default_permission: read
+
+  projects:
+    description: "Project-specific knowledge"
+    default_permission: blocked
+    subdirectories:
+      shared:
+        description: "Knowledge shared across all projects"
+        default_permission: write
+      marketing:
+        description: "Marketing team knowledge"
+        default_permission: blocked
+      research:
+        description: "Research team knowledge"
+        default_permission: blocked
+      development:
+        description: "Development team knowledge"
+        default_permission: blocked

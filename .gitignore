@@ -1,0 +1,40 @@
+# Gitignore for MAP Wiki
+
+# Dependencies
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+npm-debug.log*
+
+# Test coverage
+coverage/
+
+# Build outputs
+dist/
+build/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# OpenClaw specific
+.openclaw-wiki/cache/
+.openclaw-wiki/locks/
+.openclaw-wiki/log.jsonl
+.openclaw-wiki/source-sync.json
+
+# Temporary files
+*.tmp
+*.temp
