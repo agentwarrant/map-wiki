@@ -10,6 +10,51 @@ MAP Wiki provides:
 - **Audit logging** - Track all access attempts for compliance
 - **OpenClaw integration** - Works with the built-in wiki tools and memory-wiki plugin
 
+## How it Works
+
+### 1. Agent Reads Wiki
+```
+AGENT READS WIKI
+ └─> wiki_get("shared/competitor-analysis")
+     └─> Permission middleware checks: can agent read /shared/?
+     └─> Returns page content
+```
+
+### 2. Agent Writes to Wiki
+```
+AGENT WRITES TO WIKI
+ └─> wiki_apply("syntheses/project-q2-roadmap", body="...")
+     └─> Permission middleware checks: can agent write /syntheses/?
+     └─> Writes page with frontmatter:
+         ---
+         author: agent:project-agent
+         confidence: 0.85
+         evidence:
+           - source: sources/project-call-notes.md
+             weight: 0.9
+         updated: 2026-04-28
+         ---
+```
+
+### 3. External Agent (Claude Code, Cursor, etc.)
+```
+EXTERNAL AGENT
+ └─> Uses .skills/ from obsidian-wiki pattern
+     └─> Reads SKILLS.md for instructions
+     └─> Writes to /shared/ (only path it has access to)
+     └─> Add to .manifest.json for delta tracking
+```
+
+### 4. Multi-Agent Collaboration
+```
+MULTI-AGENT COLLABORATION
+ └─> Agent A reads /shared/entities/company.md
+ └─> Agent B reads /projects/marketing/campaign.md
+ └─> Agent C blocked from /projects/research/ (not authorized)
+ └─> All agents can read /entities/ and /concepts/
+ └─> Only authorized agents can write to project sections
+```
+
 ## Use Cases
 
 - **Marketing teams** - Some agents handle marketing content, others handle development docs
