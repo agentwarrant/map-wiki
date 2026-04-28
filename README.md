@@ -267,6 +267,20 @@ wiki.canWrite('path');
 wiki.getAuditLog();
 ```
 
+## References & Acknowledgements
+
+MAP Wiki builds on ideas from:
+
+- **[Karpathy's LLM Wiki](https://github.com/karpathy/llm-wiki)** - The concept of LLM-maintained wikis with compilation architecture: "RAG retrieves and forgets. Wiki accumulates and compounds." Three-layer architecture: raw sources → wiki → schema.
+
+- **[Ar9av/obsidian-wiki](https://github.com/Ar9av/obsidian-wiki)** - Multi-agent wiki framework with AGENTS.md conventions for Claude Code, Cursor, Windsurf, Gemini CLI, OpenClaw, and others. Manifest-based delta tracking for ingestion.
+
+MAP Wiki extends these patterns with:
+- Permission-based access control for multi-agent collaboration
+- Project-specific write permissions with shared knowledge
+- Audit logging for compliance
+- OpenClaw integration with the memory-wiki plugin
+
 ## Roadmap
 
 ### Future: Agent Identity & Cryptographic Verification (Phase 4)
